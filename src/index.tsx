@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Login from './Pages/Login'
 import MultipleSelectChip from "./Pages/CustomerDashboard";
+import {Configuration, DefaultApi} from "./sdk";
 
 //
 // const root = ReactDOM.createRoot(
@@ -13,11 +14,11 @@ import MultipleSelectChip from "./Pages/CustomerDashboard";
 // root.render(
 //   <React.StrictMode>
 //     <App />
-
 //   </React.StrictMode>
 // );
 
-
+export const BASE_PATH= "http://192.168.209.190:8000"
+export let api = new DefaultApi(new Configuration({basePath: BASE_PATH}))
 const Root = () => {
     return <React.StrictMode>
         {/*<Provider store={store}>*/}

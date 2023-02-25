@@ -24,6 +24,7 @@ export default function Login() {
 
 
     return <Paper>
+        <Grid>Typograhy</Grid>
         <Card sx={{padding: 2, justifyContent: "center"}}>
             <Grid container direction={"column"} gap={2} padding={1}
                   justifyContent={"center"}
@@ -33,12 +34,14 @@ export default function Login() {
                     <TextField label={"Username"} value={state.username} name={"username"} onChange={onChange}/>
                 </Grid>
                 <Grid>
-                    <TextField label={"Password"} inputProps={{type: "password"}} value={state.password} name={"password"} onChange={onChange}/>
+                    <TextField label={"Password"} inputProps={{type: "password"}} value={state.password}
+                               name={"password"} onChange={onChange}/>
                 </Grid>
                 <Grid>
                     <Button variant={"contained"} onClick={login}>Sign in</Button>
                 </Grid>
-                <Typography>Don't have an account? <Link to={"/signup"}>Sign up</Link> for a free account now!</Typography>
+                <Typography>Don't have an account? <Link to={"/signup"}>Sign up</Link> for a free account
+                    now!</Typography>
             </Grid>
         </Card>
     </Paper>

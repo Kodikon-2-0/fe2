@@ -4,6 +4,8 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Login from './Pages/Login'
+import MultipleSelectChip from "./Pages/CustomerDashboard";
+
 //
 // const root = ReactDOM.createRoot(
 //   document.getElementById('root') as HTMLElement
@@ -11,6 +13,7 @@ import Login from './Pages/Login'
 // root.render(
 //   <React.StrictMode>
 //     <App />
+
 //   </React.StrictMode>
 // );
 
@@ -23,6 +26,7 @@ const Root = () => {
             {/*<App/>*/}
             <Routes>
                 <Route path={"/"} element={<Login/>}/>
+                <Route path={"CustomerDashboard"} element={<MultipleSelectChip/>}/>
             </Routes>
         </BrowserRouter>
         {/*</ThemeProvider>*/}

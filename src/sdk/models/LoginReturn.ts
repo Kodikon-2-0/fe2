@@ -25,6 +25,12 @@ export interface LoginReturn {
      * @memberof LoginReturn
      */
     token: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof LoginReturn
+     */
+    usertype: number;
 }
 
 /**
@@ -33,6 +39,7 @@ export interface LoginReturn {
 export function instanceOfLoginReturn(value: object): boolean {
     let isInstance = true;
     isInstance = isInstance && "token" in value;
+    isInstance = isInstance && "usertype" in value;
 
     return isInstance;
 }
@@ -48,6 +55,7 @@ export function LoginReturnFromJSONTyped(json: any, ignoreDiscriminator: boolean
     return {
         
         'token': json['token'],
+        'usertype': json['usertype'],
     };
 }
 
@@ -61,6 +69,7 @@ export function LoginReturnToJSON(value?: LoginReturn | null): any {
     return {
         
         'token': value.token,
+        'usertype': value.usertype,
     };
 }
 

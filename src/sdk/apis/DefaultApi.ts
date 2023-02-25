@@ -15,14 +15,20 @@
 
 import * as runtime from '../runtime';
 import type {
+  CreateAccountDetails,
   HTTPValidationError,
+  Info,
   LoginDetails,
   LoginReturn,
   UserSetType,
 } from '../models';
 import {
+    CreateAccountDetailsFromJSON,
+    CreateAccountDetailsToJSON,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
+    InfoFromJSON,
+    InfoToJSON,
     LoginDetailsFromJSON,
     LoginDetailsToJSON,
     LoginReturnFromJSON,
@@ -32,7 +38,16 @@ import {
 } from '../models';
 
 export interface CreateAccountCreateAccountPostRequest {
-    loginDetails: LoginDetails;
+    createAccountDetails: CreateAccountDetails;
+}
+
+export interface GetDistrictInfoDataStateDistrictsGetRequest {
+    state: any;
+}
+
+export interface GetMandalInfoDataStateDistrictMandalsGetRequest {
+    state: any;
+    district: any;
 }
 
 export interface LoginLoginPostRequest {
@@ -61,8 +76,8 @@ export class DefaultApi extends runtime.BaseAPI {
      * Create Account
      */
     async createAccountCreateAccountPostRaw(requestParameters: CreateAccountCreateAccountPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LoginReturn>> {
-        if (requestParameters.loginDetails === null || requestParameters.loginDetails === undefined) {
-            throw new runtime.RequiredError('loginDetails','Required parameter requestParameters.loginDetails was null or undefined when calling createAccountCreateAccountPost.');
+        if (requestParameters.createAccountDetails === null || requestParameters.createAccountDetails === undefined) {
+            throw new runtime.RequiredError('createAccountDetails','Required parameter requestParameters.createAccountDetails was null or undefined when calling createAccountCreateAccountPost.');
         }
 
         const queryParameters: any = {};
@@ -76,7 +91,7 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: LoginDetailsToJSON(requestParameters.loginDetails),
+            body: CreateAccountDetailsToJSON(requestParameters.createAccountDetails),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => LoginReturnFromJSON(jsonValue));
@@ -87,6 +102,96 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async createAccountCreateAccountPost(requestParameters: CreateAccountCreateAccountPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<LoginReturn> {
         const response = await this.createAccountCreateAccountPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get District Info
+     */
+    async getDistrictInfoDataStateDistrictsGetRaw(requestParameters: GetDistrictInfoDataStateDistrictsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Info>> {
+        if (requestParameters.state === null || requestParameters.state === undefined) {
+            throw new runtime.RequiredError('state','Required parameter requestParameters.state was null or undefined when calling getDistrictInfoDataStateDistrictsGet.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/data/{state}/districts`.replace(`{${"state"}}`, encodeURIComponent(String(requestParameters.state))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => InfoFromJSON(jsonValue));
+    }
+
+    /**
+     * Get District Info
+     */
+    async getDistrictInfoDataStateDistrictsGet(requestParameters: GetDistrictInfoDataStateDistrictsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Info> {
+        const response = await this.getDistrictInfoDataStateDistrictsGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get Mandal Info
+     */
+    async getMandalInfoDataStateDistrictMandalsGetRaw(requestParameters: GetMandalInfoDataStateDistrictMandalsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Info>> {
+        if (requestParameters.state === null || requestParameters.state === undefined) {
+            throw new runtime.RequiredError('state','Required parameter requestParameters.state was null or undefined when calling getMandalInfoDataStateDistrictMandalsGet.');
+        }
+
+        if (requestParameters.district === null || requestParameters.district === undefined) {
+            throw new runtime.RequiredError('district','Required parameter requestParameters.district was null or undefined when calling getMandalInfoDataStateDistrictMandalsGet.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/data/{state}/{district}/mandals`.replace(`{${"state"}}`, encodeURIComponent(String(requestParameters.state))).replace(`{${"district"}}`, encodeURIComponent(String(requestParameters.district))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => InfoFromJSON(jsonValue));
+    }
+
+    /**
+     * Get Mandal Info
+     */
+    async getMandalInfoDataStateDistrictMandalsGet(requestParameters: GetMandalInfoDataStateDistrictMandalsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Info> {
+        const response = await this.getMandalInfoDataStateDistrictMandalsGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get State Info
+     */
+    async getStateInfoDataStatesGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Info>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/data/states`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => InfoFromJSON(jsonValue));
+    }
+
+    /**
+     * Get State Info
+     */
+    async getStateInfoDataStatesGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Info> {
+        const response = await this.getStateInfoDataStatesGetRaw(initOverrides);
         return await response.value();
     }
 

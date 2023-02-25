@@ -6,16 +6,8 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Login from './Pages/Login'
 import MultipleSelectChip from "./Pages/CustomerDashboard";
 import {Configuration, DefaultApi} from "./sdk";
-
-//
-// const root = ReactDOM.createRoot(
-//   document.getElementById('root') as HTMLElement
-// );
-// root.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>
-// );
+import Dashboard from "./Pages/Dashboard";
+import SignUp from "./Pages/SignUp";
 
 export const BASE_PATH= "http://192.168.209.190:8000"
 export let api = new DefaultApi(new Configuration({basePath: BASE_PATH}))
@@ -24,9 +16,10 @@ const Root = () => {
         {/*<Provider store={store}>*/}
         {/*        <ThemeProvider theme={}>*/}
         <BrowserRouter>
-            {/*<App/>*/}
             <Routes>
                 <Route path={"/"} element={<Login/>}/>
+                <Route path={"/signup"} element={<SignUp/>}/>
+                <Route path={"/dashboard"} element={<Dashboard/>}/>
                 <Route path={"CustomerDashboard"} element={<MultipleSelectChip/>}/>
             </Routes>
         </BrowserRouter>

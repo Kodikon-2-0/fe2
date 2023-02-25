@@ -1,8 +1,9 @@
-.openapi-generator-ignore
 apis/DefaultApi.ts
 apis/index.ts
 index.ts
+models/CreateAccountDetails.ts
 models/HTTPValidationError.ts
+models/Info.ts
 models/LocationInner.ts
 models/LoginDetails.ts
 models/LoginReturn.ts

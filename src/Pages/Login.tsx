@@ -14,9 +14,11 @@ export default function Login() {
     const login = () => {
         api.loginLoginPost({loginDetails: {username: state.username, password: state.password}}).then(r => {
             api.configuration.config = new Configuration({accessToken: r.token, basePath: BASE_PATH})
+            const permissions = r.usertype
+            if(permissions && (1 || 2 || 3)) {
+                navigate("/dashboard")
+            }
             // navigate()
-
-
         })
     }
 

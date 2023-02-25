@@ -19,8 +19,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import LogoRect from "../components/logoRect";
-import {ResourceGroupInfo} from "../sdk";
+import {ResourceGroupInfo, SearchDetails} from "../sdk";
 import DateSetter from "../components/DateSetter";
+import dayjs from "dayjs";
 
 const drawerWidth = 240;
 
@@ -74,6 +75,7 @@ const DrawerHeader = styled('div')(({theme}) => ({
 }));
 
 export default function Dashboard() {
+    const [data, setData] = useState<SearchDetails>({resourceType: 0, startTime: new Date, endTime: new Date})
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
@@ -111,6 +113,12 @@ export default function Dashboard() {
         })
     }, [])
 
+    const search = () => {
+        api.searchDataStateDistrictMandalSearchPost({
+            district: district, state: state, mandal: mandal, searchDetails: data
+        })
+    }
+
     // const onChange_resource = (e: SelectChangeEvent) => {
     //     setResource({resourceGroups: e.target.value})
     // }
@@ -130,131 +138,138 @@ export default function Dashboard() {
         setResource(g.target.value)
     }
 
-    const [startDate, setStartDate] = useState<Date|null>(null)
-    const [endDate, setEndDate] = useState<Date|null>(null)
+    const [startDate, setStartDate] = useState<Date | null>(null)
+    const [endDate, setEndDate] = useState<Date | null>(null)
 
     return <>
-f        <Box sx={{display: 'flex'}}>
-            <CssBaseline/>
-            <AppBar position="fixed" sx={{color: "ffffff"}} open={open}>
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        sx={{mr: 2, ...(open && {display: 'none'})}}
-                    >
+        <Box sx={{display: 'flex'}}>
+        <CssBaseline/>
+        <AppBar position="fixed" sx={{color: "ffffff"}} open={open}>
+            <Toolbar>
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={handleDrawerOpen}
+                    edge="start"
+                    sx={{mr: 2, ...(open && {display: 'none'})}}
+                >
+                    <Grid container direction={"row"} gap={2} padding={1} alignItems={"center"}>
                         <MenuIcon/>
-                    </IconButton>
-                    {/*<Typography variant="h6" noWrap component="div">*/}
-                    {/*    Krishi Genie </Typography>*/}
-                    <LogoRect/>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                sx={{
-                    width: drawerWidth,
-                    flexShrink: 0,
-                    '& .MuiDrawer-paper': {
-                        width: drawerWidth,
-                        boxSizing: 'border-box',
-                    },
-                }}
-                variant="persistent"
-                anchor="left"
-                open={open}
-            >
-                <DrawerHeader>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
-                    </IconButton>
-                </DrawerHeader>
-                <Divider/>
-                <List>
-                    <ListItem>
-                        <Stack direction="row" spacing={1} alignItems="center">
-                            <Typography>Lend</Typography>
-                            <FormControlLabel control={<Switch/>} label={""} labelPlacement={"top"}/>
-                            <Typography>Lease</Typography>
-                        </Stack>
-                    </ListItem>
-                </List>
-            </Drawer>
-            <Main open={open}>
-                <DrawerHeader/>
-                <Grid container direction={"column"} gap={2} alignItems={"center"}>
-                    <Grid>
-                        <Select value={state} onChange={onChange_state} sx={{width: 250}}>
-                            <MenuItem value={"default"}>
-                                Select State
-                            </MenuItem>
-                            {
-                                states.map((s, i) => {
-                                    return <MenuItem key={"state_" + i.toString()} value={s}>
-                                        {s}
-                                    </MenuItem>
-                                })
-                            }
-                        </Select>
+                        <LogoRect/>
                     </Grid>
-                    <Grid>
-                        <Select value={district} onChange={onChange_districts} sx={{width: 250}}>
-                            <MenuItem value={"default"} disabled={true}>
-                                Select District
-                            </MenuItem>
-                            {
-                                districts.map((s, i) => {
-                                    return <MenuItem key={"districts_" + i.toString()} value={s}>
-                                        {s}
-                                    </MenuItem>
-                                })
-                            }
-                        </Select>
-                    </Grid>
-                    <Grid>
-                        <Select value={mandal} onChange={onChange_mandals} sx={{width: 250}}>
-                            <MenuItem value={"default"} disabled={true}>
-                                Select Mandal
-                            </MenuItem>
-                            {
-                                mandals.map((s, i) => {
-                                    return <MenuItem key={"mandals_" + i.toString()} value={s}>
-                                        {s}
-                                    </MenuItem>
-                                })
-                            }
-                        </Select>
-                    </Grid>
-                    <Grid>
-                        <Grid>
-                            <Select value={resource} onChange={onChange_resource} sx={{width: 250}}>
-                                <MenuItem value={"default"} disabled={true}>
-                                    Select Resource
-                                </MenuItem>
-                                {
-                                    resources.map((s, i) => {
-                                        return <MenuItem key={"resources_" + i.toString()} value={s.name}>
-                                            {s.name}
-                                        </MenuItem>
-                                    })
-                                }
-                            </Select>
-                        </Grid>
 
-                    </Grid>
-                    <Grid>
-                        <DateSetter date={startDate} setDate={setStartDate} label={"Start Date"}/>
-                    </Grid>
-                    <Grid>
-                        <DateSetter date={endDate} setDate={setEndDate} label={"End Date"}/>
-                    </Grid>
-                    <Grid>
-                        <Button variant={"contained"}>Search!</Button>
-                    </Grid>
+                </IconButton>
+
+                {/*<Typography variant="h6" noWrap component="div">*/}
+                {/*    Krishi Genie </Typography>*/}
+            </Toolbar>
+        </AppBar>
+        <Drawer
+            sx={{
+                width: drawerWidth,
+                flexShrink: 0,
+                '& .MuiDrawer-paper': {
+                    width: drawerWidth,
+                    boxSizing: 'border-box',
+                },
+            }}
+            variant="persistent"
+            anchor="left"
+            open={open}
+        >
+            <DrawerHeader>
+                <IconButton onClick={handleDrawerClose}>
+                    {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
+                </IconButton>
+            </DrawerHeader>
+            <Divider/>
+            <List>
+                <ListItem>
+                    <Stack direction="row" spacing={1} alignItems="center">
+                        <Typography>Lend</Typography>
+                        <FormControlLabel control={<Switch/>} label={""} labelPlacement={"top"}/>
+                        <Typography>Lease</Typography>
+                    </Stack>
+                </ListItem>
+            </List>
+        </Drawer>
+        <Main open={open}>
+            <DrawerHeader/>
+            <Grid container direction={"column"} gap={2} alignItems={"center"}>
+                <Grid>
+                    <Typography variant={"h5"}>Search for Resources</Typography>
                 </Grid>
-            </Main>
-        </Box>
+                <Grid>
+                    <Select value={state} onChange={onChange_state} sx={{width: 250}}>
+                        <MenuItem value={"default"}>
+                            Select State
+                        </MenuItem>
+                        {
+                            states.map((s, i) => {
+                                return <MenuItem key={"state_" + i.toString()} value={s}>
+                                    {s}
+                                </MenuItem>
+                            })
+                        }
+                    </Select>
+                </Grid>
+                <Grid>
+                    <Select value={district} onChange={onChange_districts} sx={{width: 250}}>
+                        <MenuItem value={"default"} disabled={true}>
+                            Select District
+                        </MenuItem>
+                        {
+                            districts.map((s, i) => {
+                                return <MenuItem key={"districts_" + i.toString()} value={s}>
+                                    {s}
+                                </MenuItem>
+                            })
+                        }
+                    </Select>
+                </Grid>
+                <Grid>
+                    <Select value={mandal} onChange={onChange_mandals} sx={{width: 250}}>
+                        <MenuItem value={"default"} disabled={true}>
+                            Select Mandal
+                        </MenuItem>
+                        {
+                            mandals.map((s, i) => {
+                                return <MenuItem key={"mandals_" + i.toString()} value={s}>
+                                    {s}
+                                </MenuItem>
+                            })
+                        }
+                    </Select>
+                </Grid>
+                <Grid>
+                    <Grid>
+                        <Select value={resource} onChange={onChange_resource} sx={{width: 250}}>
+                            <MenuItem value={"default"} disabled={true}>
+                                Select Resource
+                            </MenuItem>
+                            {
+                                resources.map((s, i) => {
+                                    return <MenuItem key={"resources_" + i.toString()} value={s.name}>
+                                        {s.name}
+                                    </MenuItem>
+                                })
+                            }
+                        </Select>
+                    </Grid>
+
+                </Grid>
+                <Grid>
+                    <DateSetter date={startDate} setDate={setStartDate} label={"Start Date"}/>
+                </Grid>
+                <Grid>
+                    <DateSetter date={endDate} setDate={setEndDate} label={"End Date"}/>
+                </Grid>
+                <Grid>
+                    <Button variant={"contained"}>Search!</Button>
+                </Grid>
+            </Grid>
+        </Main>
+    </Box>
 
     </>
 }

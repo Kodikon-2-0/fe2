@@ -20,6 +20,8 @@ import type {
   Info,
   LoginDetails,
   LoginReturn,
+  OrderCreateDetails,
+  ResourceAvailabilityDetails,
   ResourceCreateDetails,
   ResourceGroupReturn,
   SearchDetails,
@@ -36,6 +38,10 @@ import {
     LoginDetailsToJSON,
     LoginReturnFromJSON,
     LoginReturnToJSON,
+    OrderCreateDetailsFromJSON,
+    OrderCreateDetailsToJSON,
+    ResourceAvailabilityDetailsFromJSON,
+    ResourceAvailabilityDetailsToJSON,
     ResourceCreateDetailsFromJSON,
     ResourceCreateDetailsToJSON,
     ResourceGroupReturnFromJSON,
@@ -48,6 +54,10 @@ import {
 
 export interface CreateAccountCreateAccountPostRequest {
     createAccountDetails: CreateAccountDetails;
+}
+
+export interface CreateOrderOrderPostRequest {
+    orderCreateDetails: OrderCreateDetails;
 }
 
 export interface CreateResourceDataStateDistrictMandalResourcesPostRequest {
@@ -75,6 +85,11 @@ export interface SearchDataStateDistrictMandalSearchPostRequest {
     district: string;
     mandal: string;
     searchDetails: SearchDetails;
+}
+
+export interface SetResourceRangeResourcesResourceIdSetAvailableRangePostRequest {
+    resourceId: number;
+    resourceAvailabilityDetails: ResourceAvailabilityDetails;
 }
 
 export interface SetTypeUserSetTypePatchRequest {
@@ -125,6 +140,44 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async createAccountCreateAccountPost(requestParameters: CreateAccountCreateAccountPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<LoginReturn> {
         const response = await this.createAccountCreateAccountPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Create Order
+     */
+    async createOrderOrderPostRaw(requestParameters: CreateOrderOrderPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.orderCreateDetails === null || requestParameters.orderCreateDetails === undefined) {
+            throw new runtime.RequiredError('orderCreateDetails','Required parameter requestParameters.orderCreateDetails was null or undefined when calling createOrderOrderPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2PasswordBearer", []);
+        }
+
+        const response = await this.request({
+            path: `/order`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: OrderCreateDetailsToJSON(requestParameters.orderCreateDetails),
+        }, initOverrides);
+
+        return new runtime.TextApiResponse(response) as any;
+    }
+
+    /**
+     * Create Order
+     */
+    async createOrderOrderPost(requestParameters: CreateOrderOrderPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.createOrderOrderPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -395,6 +448,48 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async searchDataStateDistrictMandalSearchPost(requestParameters: SearchDataStateDistrictMandalSearchPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.searchDataStateDistrictMandalSearchPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Set Resource Range
+     */
+    async setResourceRangeResourcesResourceIdSetAvailableRangePostRaw(requestParameters: SetResourceRangeResourcesResourceIdSetAvailableRangePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.resourceId === null || requestParameters.resourceId === undefined) {
+            throw new runtime.RequiredError('resourceId','Required parameter requestParameters.resourceId was null or undefined when calling setResourceRangeResourcesResourceIdSetAvailableRangePost.');
+        }
+
+        if (requestParameters.resourceAvailabilityDetails === null || requestParameters.resourceAvailabilityDetails === undefined) {
+            throw new runtime.RequiredError('resourceAvailabilityDetails','Required parameter requestParameters.resourceAvailabilityDetails was null or undefined when calling setResourceRangeResourcesResourceIdSetAvailableRangePost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2PasswordBearer", []);
+        }
+
+        const response = await this.request({
+            path: `/resources/{resource_id}/setAvailableRange`.replace(`{${"resource_id"}}`, encodeURIComponent(String(requestParameters.resourceId))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ResourceAvailabilityDetailsToJSON(requestParameters.resourceAvailabilityDetails),
+        }, initOverrides);
+
+        return new runtime.TextApiResponse(response) as any;
+    }
+
+    /**
+     * Set Resource Range
+     */
+    async setResourceRangeResourcesResourceIdSetAvailableRangePost(requestParameters: SetResourceRangeResourcesResourceIdSetAvailableRangePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.setResourceRangeResourcesResourceIdSetAvailableRangePostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

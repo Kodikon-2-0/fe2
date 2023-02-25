@@ -21,16 +21,16 @@ import { exists, mapValues } from '../runtime';
 export interface SearchDetails {
     /**
      * 
-     * @type {number}
+     * @type {Date}
      * @memberof SearchDetails
      */
-    startTime: number;
+    startTime: Date;
     /**
      * 
-     * @type {number}
+     * @type {Date}
      * @memberof SearchDetails
      */
-    endTime: number;
+    endTime: Date;
     /**
      * 
      * @type {number}
@@ -61,8 +61,8 @@ export function SearchDetailsFromJSONTyped(json: any, ignoreDiscriminator: boole
     }
     return {
         
-        'startTime': json['start_time'],
-        'endTime': json['end_time'],
+        'startTime': (new Date(json['start_time'])),
+        'endTime': (new Date(json['end_time'])),
         'resourceType': json['resource_type'],
     };
 }
@@ -76,8 +76,8 @@ export function SearchDetailsToJSON(value?: SearchDetails | null): any {
     }
     return {
         
-        'start_time': value.startTime,
-        'end_time': value.endTime,
+        'start_time': (value.startTime.toISOString()),
+        'end_time': (value.endTime.toISOString()),
         'resource_type': value.resourceType,
     };
 }

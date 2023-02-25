@@ -7,6 +7,8 @@ models/Info.ts
 models/LocationInner.ts
 models/LoginDetails.ts
 models/LoginReturn.ts
+models/OrderCreateDetails.ts
+models/ResourceAvailabilityDetails.ts
 models/ResourceCreateDetails.ts
 models/ResourceGroupInfo.ts
 models/ResourceGroupReturn.ts

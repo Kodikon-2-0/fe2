@@ -214,6 +214,7 @@ export class DefaultApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.accessToken) {
+            console.log("Test")
             // oauth required
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2PasswordBearer", []);
         }

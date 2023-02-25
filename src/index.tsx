@@ -11,12 +11,12 @@ import SignUp from "./Pages/SignUp";
 import {createTheme, ThemeProvider} from "@mui/material";
 import {green} from "@mui/material/colors";
 import OrderBook from "./Pages/OrderBook";
-import AddResource from "./Pages/AddResource";
+
 import LenderDashboard from "./Pages/LenderDashboard";
 import {LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-
-export const BASE_PATH = "http://192.168.209.190:8000"
+import AddResource from "./Pages/AddResource";
+import {BASE_PATH} from "./path";
 export let api = new DefaultApi(new Configuration({basePath: BASE_PATH}))
 
 const theme = createTheme({

@@ -130,11 +130,26 @@ export default function Dashboard() {
         setResource(g.target.value)
     }
 
-    const [startDate, setStartDate] = useState<Date|null>(null)
-    const [endDate, setEndDate] = useState<Date|null>(null)
+    const [startDate, setStartDate] = useState<Date | null>(null)
+    const [endDate, setEndDate] = useState<Date | null>(null)
+
+    const onSearch = () => {
+        const resource_type = resources.find(s => s.name == resource)
+        if (!resource_type) {
+            return
+        }
+        api.searchDataStateDistrictMandalSearchPost({
+            state: state,
+            district: district,
+            mandal: mandal,
+            searchDetails: {startTime: startDate as Date, endTime: endDate as Date, resourceType: resource_type.id}
+        }).then(r => {
+
+        })
+    }
 
     return <>
-f        <Box sx={{display: 'flex'}}>
+        <Box sx={{display: 'flex'}}>
             <CssBaseline/>
             <AppBar position="fixed" sx={{color: "ffffff"}} open={open}>
                 <Toolbar>
@@ -252,6 +267,9 @@ f        <Box sx={{display: 'flex'}}>
                     <Grid>
                         <Button variant={"contained"}>Search!</Button>
                     </Grid>
+                </Grid>
+                <Grid container>
+
                 </Grid>
             </Main>
         </Box>

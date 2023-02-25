@@ -1,13 +1,15 @@
 import React, {useState} from "react";
 import {Button, Card, Grid, Paper, TextField, Typography} from "@mui/material";
 import {Configuration} from "../sdk";
-import {api, BASE_PATH} from "../index";
+import {api} from "../index";
 import {Link, useNavigate} from "react-router-dom";
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import LogoRect from "../components/logoRect";
+import Cookies from "universal-cookie";
+import {BASE_PATH} from "../path";
 
 export default function Login() {
     const [state, setState] = useState({username: "", password: ""})
@@ -19,6 +21,8 @@ export default function Login() {
     const login = () => {
         api.loginLoginPost({loginDetails: {username: state.username, password: state.password}}).then(r => {
             api.configuration.config = new Configuration({accessToken: r.token, basePath: BASE_PATH})
+            const cookies = new Cookies()
+            cookies.set("token", r.token)
             const permissions = r.usertype
             if (permissions && (1 || 2 || 3)) {
                 navigate("/dashboard")

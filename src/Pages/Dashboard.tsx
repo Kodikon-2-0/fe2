@@ -83,8 +83,8 @@ export default function Dashboard() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    const [resource, setResource] = useState<Array<ResourceGroupInfo>>([])
-
+    const [resources, setResources] = useState<Array<ResourceGroupInfo>>([])
+    const [resource, setResource] = useState("default")
     const [states, setStates] = useState<Array<string>>([])
     const [state, setState] = useState<string>("default")
     useEffect(() => {
@@ -106,9 +106,9 @@ export default function Dashboard() {
 
     useEffect(() => {
         api.getResourceGroupsDataResourceGroupsGet().then(r => {
-            setResource(r.resourceGroups)
+            setResources(r.resourceGroups)
         })
-    })
+    }, [])
 
     // const onChange_resource = (e: SelectChangeEvent) => {
     //     setResource({resourceGroups: e.target.value})
@@ -125,7 +125,9 @@ export default function Dashboard() {
     const onChange_mandals = (g: SelectChangeEvent<string>) => {
         setMandal(g.target.value)
     }
-
+    const onChange_resource = (g: SelectChangeEvent<string>) => {
+        setResource(g.target.value)
+    }
 
     return <>
 f        <Box sx={{display: 'flex'}}>
@@ -213,7 +215,7 @@ f        <Box sx={{display: 'flex'}}>
                             </MenuItem>
                             {
                                 districts.map((s, i) => {
-                                    return <MenuItem key={"state_" + i.toString()} value={s}>
+                                    return <MenuItem key={"districts_" + i.toString()} value={s}>
                                         {s}
                                     </MenuItem>
                                 })
@@ -227,12 +229,28 @@ f        <Box sx={{display: 'flex'}}>
                             </MenuItem>
                             {
                                 mandals.map((s, i) => {
-                                    return <MenuItem key={"state_" + i.toString()} value={s}>
+                                    return <MenuItem key={"mandals_" + i.toString()} value={s}>
                                         {s}
                                     </MenuItem>
                                 })
                             }
                         </Select>
+                    </Grid>
+                    <Grid>
+                        <Grid>
+                            <Select value={resource} onChange={onChange_resource} sx={{width: 250}}>
+                                <MenuItem value={"default"} disabled={true}>
+                                    Select Resource
+                                </MenuItem>
+                                {
+                                    resources.map((s, i) => {
+                                        return <MenuItem key={"resources_" + i.toString()} value={s.name}>
+                                            {s.name}
+                                        </MenuItem>
+                                    })
+                                }
+                            </Select>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Main>

@@ -19,8 +19,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import LogoRect from "../components/logoRect";
-import {ResourceGroupInfo} from "../sdk";
+import {ResourceGroupInfo, SearchDetails} from "../sdk";
 import DateSetter from "../components/DateSetter";
+import dayjs from "dayjs";
 
 const drawerWidth = 240;
 
@@ -74,6 +75,7 @@ const DrawerHeader = styled('div')(({theme}) => ({
 }));
 
 export default function Dashboard() {
+    const [data, setData] = useState<SearchDetails>({resourceType: 0, startTime: new Date, endTime: new Date})
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
@@ -110,6 +112,12 @@ export default function Dashboard() {
             setResources(r.resourceGroups)
         })
     }, [])
+
+    const search = () => {
+        api.searchDataStateDistrictMandalSearchPost({
+            district: district, state: state, mandal: mandal, searchDetails: data
+        })
+    }
 
     // const onChange_resource = (e: SelectChangeEvent) => {
     //     setResource({resourceGroups: e.target.value})
@@ -150,16 +158,17 @@ export default function Dashboard() {
 
     return <>
         <Box sx={{display: 'flex'}}>
-            <CssBaseline/>
-            <AppBar position="fixed" sx={{color: "ffffff"}} open={open}>
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        sx={{mr: 2, ...(open && {display: 'none'})}}
-                    >
+        <CssBaseline/>
+        <AppBar position="fixed" sx={{color: "ffffff"}} open={open}>
+            <Toolbar>
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={handleDrawerOpen}
+                    edge="start"
+                    sx={{mr: 2, ...(open && {display: 'none'})}}
+                >
+                    <Grid container direction={"row"} gap={2} padding={1} alignItems={"center"}>
                         <MenuIcon/>
                     </IconButton>
                     {/*<Typography variant="h6" noWrap component="div">*/}
@@ -272,7 +281,7 @@ export default function Dashboard() {
 
                 </Grid>
             </Main>
-        </Box>
+    </Box>
 
     </>
 }

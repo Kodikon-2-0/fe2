@@ -1,23 +1,16 @@
 import {useNavigate} from "react-router-dom";
-import {Paper} from "@mui/material";
+import {Button, Paper} from "@mui/material";
+import {api} from "../index";
 
 export default function OrderBook() {
-    const navigate = useNavigate()
-    // const onClick_OrderBook = () => {
-    //     navigate()
-    // }
-    // const onClick_AddResource = () => {
-    //     navigate()
-    // }
-
-    return <Paper>
-        {/*<Grid container direction={"column"}>*/}
-        {/*    <Grid>*/}
-        {/*        <Button onClick={onClick_OrderBook}>Order Book</Button>*/}
-        {/*    </Grid>*/}
-        {/*    <Grid>*/}
-        {/*        <Button onClick={onClick_AddResource}>Add Resource</Button>*/}
-        {/*    </Grid>*/}
-        {/*</Grid>*/}
-    </Paper>
+    const getOrder = () => {
+        api.getOrdersOrdersGet({
+        }).then(r => {
+            console.log(r)
+        })
+    }
+    return <>
+        <Button onClick={getOrder}>
+            Get
+        </Button></>
 }

@@ -53,18 +53,20 @@ export default function SignUp() {
                 alert(e)
             })
         } else {
-            alert("passwords not matching!")
+            alert("passwords do not match!")
         }
     }
 
 
     return <Paper>
-        <LogoRect/>
         <Card sx={{padding: 2, justifyContent: "center"}}>
             <Grid container direction={"column"} gap={2} padding={1}
                   justifyContent={"center"}
                   alignItems={"center"}
             >
+                <Grid>
+                    <LogoRect/>
+                </Grid>
                 <Grid>
                     <TextField label={"Username"} value={state.username} name={"username"} onChange={onChange}/>
                 </Grid>

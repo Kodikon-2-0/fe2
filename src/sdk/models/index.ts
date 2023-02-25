@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export * from './CreateAccountDetails';
-export * from './CreateAccountResult'
+export * from './CreateAccountResult';
 export * from './CreateResourceResult';
 export * from './HTTPValidationError';
 export * from './Info';

@@ -3,6 +3,11 @@ import {Button, Card, Grid, Paper, TextField, Typography} from "@mui/material";
 import {Configuration} from "../sdk";
 import {api, BASE_PATH} from "../index";
 import {Link, useNavigate} from "react-router-dom";
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import LogoRect from "../components/logoRect";
 
 export default function Login() {
     const [state, setState] = useState({username: "", password: ""})
@@ -25,6 +30,7 @@ export default function Login() {
 
 
     return <Paper>
+        <LogoRect/>
         <Card sx={{padding: 2, justifyContent: "center"}}>
             <Grid container direction={"column"} gap={2} padding={1}
                   justifyContent={"center"}

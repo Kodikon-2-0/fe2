@@ -8,21 +8,33 @@ import MultipleSelectChip from "./Pages/CustomerDashboard";
 import {Configuration, DefaultApi} from "./sdk";
 import Dashboard from "./Pages/Dashboard";
 import SignUp from "./Pages/SignUp";
+import {createTheme, ThemeProvider} from "@mui/material";
+import {green} from "@mui/material/colors";
 
-export const BASE_PATH= "http://192.168.209.190:8000"
+export const BASE_PATH = "http://192.168.209.190:8000"
 export let api = new DefaultApi(new Configuration({basePath: BASE_PATH}))
+
+const theme = createTheme({
+    palette: {
+        primary: green,
+
+    }
+})
+
 const Root = () => {
     return <React.StrictMode>
         {/*<Provider store={store}>*/}
         {/*        <ThemeProvider theme={}>*/}
-        <BrowserRouter>
-            <Routes>
-                <Route path={"/"} element={<Login/>}/>
-                <Route path={"/signup"} element={<SignUp/>}/>
-                <Route path={"/dashboard"} element={<Dashboard/>}/>
-                <Route path={"CustomerDashboard"} element={<MultipleSelectChip/>}/>
-            </Routes>
-        </BrowserRouter>
+        <ThemeProvider theme={theme}>
+            <BrowserRouter>
+                <Routes>
+                    <Route path={"/"} element={<Login/>}/>
+                    <Route path={"/signup"} element={<SignUp/>}/>
+                    <Route path={"/dashboard"} element={<Dashboard/>}/>
+                    <Route path={"CustomerDashboard"} element={<MultipleSelectChip/>}/>
+                </Routes>
+            </BrowserRouter>
+        </ThemeProvider>
         {/*</ThemeProvider>*/}
     </React.StrictMode>
 }

@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Button, Card, Checkbox, FormControlLabel, Grid, Paper, TextField, Typography} from "@mui/material";
 import {api} from "../index";
 import {Link, useNavigate} from "react-router-dom";
+import LogoRect from "../components/logoRect";
 
 type form = {
     username: string
@@ -58,6 +59,7 @@ export default function SignUp() {
 
 
     return <Paper>
+        <LogoRect/>
         <Card sx={{padding: 2, justifyContent: "center"}}>
             <Grid container direction={"column"} gap={2} padding={1}
                   justifyContent={"center"}

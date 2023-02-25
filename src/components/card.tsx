@@ -1,6 +1,6 @@
 import {Card, CardMedia, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
-import img from "./img1.jpg"
+import img from "./images/img1.jpg"
 export default function ResourceCard() {
   return  <Card
         variant="outlined"

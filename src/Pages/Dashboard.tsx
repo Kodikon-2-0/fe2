@@ -18,6 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
+import LogoRect from "../components/logoRect";
 
 const drawerWidth = 240;
 
@@ -115,9 +116,9 @@ export default function Dashboard() {
 
 
     return <>
-        <Box sx={{display: 'flex'}}>
+f        <Box sx={{display: 'flex'}}>
             <CssBaseline/>
-            <AppBar position="fixed" open={open}>
+            <AppBar position="fixed" sx={{color: "ffffff"}} open={open}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -128,8 +129,9 @@ export default function Dashboard() {
                     >
                         <MenuIcon/>
                     </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        Krishi Genie </Typography>
+                    {/*<Typography variant="h6" noWrap component="div">*/}
+                    {/*    Krishi Genie </Typography>*/}
+                    <LogoRect/>
                 </Toolbar>
             </AppBar>
             <Drawer

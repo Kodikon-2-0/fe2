@@ -15,16 +15,16 @@ export default function Login() {
         api.loginLoginPost({loginDetails: {username: state.username, password: state.password}}).then(r => {
             api.configuration.config = new Configuration({accessToken: r.token, basePath: BASE_PATH})
             const permissions = r.usertype
-            if(permissions && (1 || 2 || 3)) {
+            if (permissions && (1 || 2 || 3)) {
                 navigate("/dashboard")
             }
-            // navigate()
+        }).catch(e => {
+            alert(e)
         })
     }
 
 
     return <Paper>
-        <Grid>Typograhy</Grid>
         <Card sx={{padding: 2, justifyContent: "center"}}>
             <Grid container direction={"column"} gap={2} padding={1}
                   justifyContent={"center"}

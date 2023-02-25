@@ -7,6 +7,10 @@ models/Info.ts
 models/LocationInner.ts
 models/LoginDetails.ts
 models/LoginReturn.ts
+models/ResourceCreateDetails.ts
+models/ResourceGroupInfo.ts
+models/ResourceGroupReturn.ts
+models/SearchDetails.ts
 models/UserSetType.ts
 models/ValidationError.ts
 models/index.ts

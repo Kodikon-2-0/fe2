@@ -19,6 +19,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import LogoRect from "../components/logoRect";
+import {ResourceGroupInfo} from "../sdk";
 
 const drawerWidth = 240;
 
@@ -82,6 +83,7 @@ export default function Dashboard() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+    const [resource, setResource] = useState<Array<ResourceGroupInfo>>([])
 
     const [states, setStates] = useState<Array<string>>([])
     const [state, setState] = useState<string>("default")
@@ -101,6 +103,16 @@ export default function Dashboard() {
         }).then(result => setMandals(result.names))
     }, [state, district])
     const [mandal, setMandal] = useState("default")
+
+    useEffect(() => {
+        api.getResourceGroupsDataResourceGroupsGet().then(r => {
+            setResource(r.resourceGroups)
+        })
+    })
+
+    // const onChange_resource = (e: SelectChangeEvent) => {
+    //     setResource({resourceGroups: e.target.value})
+    // }
 
     const onChange_state = (e: SelectChangeEvent<string>) => {
         setState(e.target.value)
@@ -166,6 +178,20 @@ f        <Box sx={{display: 'flex'}}>
             <Main open={open}>
                 <DrawerHeader/>
                 <Grid container direction={"column"} gap={2} padding={1} alignItems={"center"}>
+                    <Grid>
+                        {/*<Select value={resource} onChange={onChange_resource} sx={{width: 250}}>*/}
+                        {/*    <MenuItem value={"default"}>*/}
+                        {/*        Select Resource*/}
+                        {/*    </MenuItem>*/}
+                        {/*    {*/}
+                        {/*        states.map((s, i) => {*/}
+                        {/*            return <MenuItem key={"state_" + i.toString()} value={s}>*/}
+                        {/*                {s}*/}
+                        {/*            </MenuItem>*/}
+                        {/*        })*/}
+                        {/*    }*/}
+                        {/*</Select>*/}
+                    </Grid>
                     <Grid>
                         <Select value={state} onChange={onChange_state} sx={{width: 250}}>
                             <MenuItem value={"default"}>

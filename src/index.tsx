@@ -10,6 +10,9 @@ import Dashboard from "./Pages/Dashboard";
 import SignUp from "./Pages/SignUp";
 import {createTheme, ThemeProvider} from "@mui/material";
 import {green} from "@mui/material/colors";
+import OrderBook from "./Pages/OrderBook";
+import AddResource from "./Pages/AddResource";
+import LenderDashboard from "./Pages/LenderDashboard";
 
 export const BASE_PATH = "http://192.168.209.190:8000"
 export let api = new DefaultApi(new Configuration({basePath: BASE_PATH}))
@@ -31,7 +34,10 @@ const Root = () => {
                     <Route path={"/"} element={<Login/>}/>
                     <Route path={"/signup"} element={<SignUp/>}/>
                     <Route path={"/dashboard"} element={<Dashboard/>}/>
+                    <Route path={"/dashboard/lender"} element={<LenderDashboard/>}/>
                     <Route path={"CustomerDashboard"} element={<MultipleSelectChip/>}/>
+                    <Route path={"/dashboard/OrderBook"} element={<OrderBook/>}/>
+                    <Route path={"/dashboard/AddResource"} element={<AddResource/>}/>
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>

@@ -20,6 +20,9 @@ import type {
   Info,
   LoginDetails,
   LoginReturn,
+  ResourceCreateDetails,
+  ResourceGroupReturn,
+  SearchDetails,
   UserSetType,
 } from '../models';
 import {
@@ -33,12 +36,25 @@ import {
     LoginDetailsToJSON,
     LoginReturnFromJSON,
     LoginReturnToJSON,
+    ResourceCreateDetailsFromJSON,
+    ResourceCreateDetailsToJSON,
+    ResourceGroupReturnFromJSON,
+    ResourceGroupReturnToJSON,
+    SearchDetailsFromJSON,
+    SearchDetailsToJSON,
     UserSetTypeFromJSON,
     UserSetTypeToJSON,
 } from '../models';
 
 export interface CreateAccountCreateAccountPostRequest {
     createAccountDetails: CreateAccountDetails;
+}
+
+export interface CreateResourceDataStateDistrictMandalResourcesPostRequest {
+    state: string;
+    district: string;
+    mandal: string;
+    resourceCreateDetails: ResourceCreateDetails;
 }
 
 export interface GetDistrictInfoDataStateDistrictsGetRequest {
@@ -52,6 +68,13 @@ export interface GetMandalInfoDataStateDistrictMandalsGetRequest {
 
 export interface LoginLoginPostRequest {
     loginDetails: LoginDetails;
+}
+
+export interface SearchDataStateDistrictMandalSearchPostRequest {
+    state: string;
+    district: string;
+    mandal: string;
+    searchDetails: SearchDetails;
 }
 
 export interface SetTypeUserSetTypePatchRequest {
@@ -102,6 +125,56 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async createAccountCreateAccountPost(requestParameters: CreateAccountCreateAccountPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<LoginReturn> {
         const response = await this.createAccountCreateAccountPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Create Resource
+     */
+    async createResourceDataStateDistrictMandalResourcesPostRaw(requestParameters: CreateResourceDataStateDistrictMandalResourcesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.state === null || requestParameters.state === undefined) {
+            throw new runtime.RequiredError('state','Required parameter requestParameters.state was null or undefined when calling createResourceDataStateDistrictMandalResourcesPost.');
+        }
+
+        if (requestParameters.district === null || requestParameters.district === undefined) {
+            throw new runtime.RequiredError('district','Required parameter requestParameters.district was null or undefined when calling createResourceDataStateDistrictMandalResourcesPost.');
+        }
+
+        if (requestParameters.mandal === null || requestParameters.mandal === undefined) {
+            throw new runtime.RequiredError('mandal','Required parameter requestParameters.mandal was null or undefined when calling createResourceDataStateDistrictMandalResourcesPost.');
+        }
+
+        if (requestParameters.resourceCreateDetails === null || requestParameters.resourceCreateDetails === undefined) {
+            throw new runtime.RequiredError('resourceCreateDetails','Required parameter requestParameters.resourceCreateDetails was null or undefined when calling createResourceDataStateDistrictMandalResourcesPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2PasswordBearer", []);
+        }
+
+        const response = await this.request({
+            path: `/data/{state}/{district}/{mandal}/resources`.replace(`{${"state"}}`, encodeURIComponent(String(requestParameters.state))).replace(`{${"district"}}`, encodeURIComponent(String(requestParameters.district))).replace(`{${"mandal"}}`, encodeURIComponent(String(requestParameters.mandal))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ResourceCreateDetailsToJSON(requestParameters.resourceCreateDetails),
+        }, initOverrides);
+
+        return new runtime.TextApiResponse(response) as any;
+    }
+
+    /**
+     * Create Resource
+     */
+    async createResourceDataStateDistrictMandalResourcesPost(requestParameters: CreateResourceDataStateDistrictMandalResourcesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.createResourceDataStateDistrictMandalResourcesPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -166,6 +239,32 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async getMandalInfoDataStateDistrictMandalsGet(requestParameters: GetMandalInfoDataStateDistrictMandalsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Info> {
         const response = await this.getMandalInfoDataStateDistrictMandalsGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get Resource Groups
+     */
+    async getResourceGroupsDataResourceGroupsGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ResourceGroupReturn>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/data/resourceGroups`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ResourceGroupReturnFromJSON(jsonValue));
+    }
+
+    /**
+     * Get Resource Groups
+     */
+    async getResourceGroupsDataResourceGroupsGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ResourceGroupReturn> {
+        const response = await this.getResourceGroupsDataResourceGroupsGetRaw(initOverrides);
         return await response.value();
     }
 
@@ -251,6 +350,51 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async rootGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.rootGetRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Search
+     */
+    async searchDataStateDistrictMandalSearchPostRaw(requestParameters: SearchDataStateDistrictMandalSearchPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.state === null || requestParameters.state === undefined) {
+            throw new runtime.RequiredError('state','Required parameter requestParameters.state was null or undefined when calling searchDataStateDistrictMandalSearchPost.');
+        }
+
+        if (requestParameters.district === null || requestParameters.district === undefined) {
+            throw new runtime.RequiredError('district','Required parameter requestParameters.district was null or undefined when calling searchDataStateDistrictMandalSearchPost.');
+        }
+
+        if (requestParameters.mandal === null || requestParameters.mandal === undefined) {
+            throw new runtime.RequiredError('mandal','Required parameter requestParameters.mandal was null or undefined when calling searchDataStateDistrictMandalSearchPost.');
+        }
+
+        if (requestParameters.searchDetails === null || requestParameters.searchDetails === undefined) {
+            throw new runtime.RequiredError('searchDetails','Required parameter requestParameters.searchDetails was null or undefined when calling searchDataStateDistrictMandalSearchPost.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/data/{state}/{district}/{mandal}/search`.replace(`{${"state"}}`, encodeURIComponent(String(requestParameters.state))).replace(`{${"district"}}`, encodeURIComponent(String(requestParameters.district))).replace(`{${"mandal"}}`, encodeURIComponent(String(requestParameters.mandal))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: SearchDetailsToJSON(requestParameters.searchDetails),
+        }, initOverrides);
+
+        return new runtime.TextApiResponse(response) as any;
+    }
+
+    /**
+     * Search
+     */
+    async searchDataStateDistrictMandalSearchPost(requestParameters: SearchDataStateDistrictMandalSearchPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.searchDataStateDistrictMandalSearchPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

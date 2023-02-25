@@ -24,7 +24,6 @@ export default function Login() {
 
 
     return <Paper>
-        <Grid>Typograhy</Grid>
         <Card sx={{padding: 2, justifyContent: "center"}}>
             <Grid container direction={"column"} gap={2} padding={1}
                   justifyContent={"center"}

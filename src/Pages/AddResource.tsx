@@ -76,7 +76,7 @@ export default function AddResource() {
         //     resourceId: ,
         //     resourceAvailabilityDetails:
         // })
-
+    }
 
         return <> <Grid container direction={"column"} gap={2} alignItems={"center"}>
             <Grid>
@@ -132,5 +132,4 @@ export default function AddResource() {
             </Grid>
         </Grid>
         </>
-    }
 }

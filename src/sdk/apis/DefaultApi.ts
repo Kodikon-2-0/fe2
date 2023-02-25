@@ -16,6 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   CreateAccountDetails,
+  CreateResourceResult,
   HTTPValidationError,
   Info,
   LoginDetails,
@@ -30,6 +31,8 @@ import type {
 import {
     CreateAccountDetailsFromJSON,
     CreateAccountDetailsToJSON,
+    CreateResourceResultFromJSON,
+    CreateResourceResultToJSON,
     HTTPValidationErrorFromJSON,
     HTTPValidationErrorToJSON,
     InfoFromJSON,
@@ -184,7 +187,7 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Create Resource
      */
-    async createResourceDataStateDistrictMandalResourcesPostRaw(requestParameters: CreateResourceDataStateDistrictMandalResourcesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async createResourceDataStateDistrictMandalResourcesPostRaw(requestParameters: CreateResourceDataStateDistrictMandalResourcesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateResourceResult>> {
         if (requestParameters.state === null || requestParameters.state === undefined) {
             throw new runtime.RequiredError('state','Required parameter requestParameters.state was null or undefined when calling createResourceDataStateDistrictMandalResourcesPost.');
         }
@@ -220,13 +223,13 @@ export class DefaultApi extends runtime.BaseAPI {
             body: ResourceCreateDetailsToJSON(requestParameters.resourceCreateDetails),
         }, initOverrides);
 
-        return new runtime.TextApiResponse(response) as any;
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateResourceResultFromJSON(jsonValue));
     }
 
     /**
      * Create Resource
      */
-    async createResourceDataStateDistrictMandalResourcesPost(requestParameters: CreateResourceDataStateDistrictMandalResourcesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+    async createResourceDataStateDistrictMandalResourcesPost(requestParameters: CreateResourceDataStateDistrictMandalResourcesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateResourceResult> {
         const response = await this.createResourceDataStateDistrictMandalResourcesPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -292,6 +295,37 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async getMandalInfoDataStateDistrictMandalsGet(requestParameters: GetMandalInfoDataStateDistrictMandalsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Info> {
         const response = await this.getMandalInfoDataStateDistrictMandalsGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get Orders
+     */
+    async getOrdersOrdersGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2PasswordBearer", []);
+        }
+
+        const response = await this.request({
+            path: `/orders`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.TextApiResponse(response) as any;
+    }
+
+    /**
+     * Get Orders
+     */
+    async getOrdersOrdersGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.getOrdersOrdersGetRaw(initOverrides);
         return await response.value();
     }
 

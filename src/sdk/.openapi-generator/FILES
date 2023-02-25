@@ -2,6 +2,7 @@ apis/DefaultApi.ts
 apis/index.ts
 index.ts
 models/CreateAccountDetails.ts
+models/CreateResourceResult.ts
 models/HTTPValidationError.ts
 models/Info.ts
 models/LocationInner.ts

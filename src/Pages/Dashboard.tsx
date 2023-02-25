@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {api} from "../index";
-import {FormControlLabel, Grid, Select, Stack, Switch} from "@mui/material";
+import {Button, FormControlLabel, Grid, Select, Stack, Switch} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {styled, useTheme} from '@mui/material/styles';
@@ -20,6 +20,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import LogoRect from "../components/logoRect";
 import {ResourceGroupInfo} from "../sdk";
+import DateSetter from "../components/DateSetter";
 
 const drawerWidth = 240;
 
@@ -129,6 +130,9 @@ export default function Dashboard() {
         setResource(g.target.value)
     }
 
+    const [startDate, setStartDate] = useState<Date|null>(null)
+    const [endDate, setEndDate] = useState<Date|null>(null)
+
     return <>
 f        <Box sx={{display: 'flex'}}>
             <CssBaseline/>
@@ -179,21 +183,7 @@ f        <Box sx={{display: 'flex'}}>
             </Drawer>
             <Main open={open}>
                 <DrawerHeader/>
-                <Grid container direction={"column"} gap={2} padding={1} alignItems={"center"}>
-                    <Grid>
-                        {/*<Select value={resource} onChange={onChange_resource} sx={{width: 250}}>*/}
-                        {/*    <MenuItem value={"default"}>*/}
-                        {/*        Select Resource*/}
-                        {/*    </MenuItem>*/}
-                        {/*    {*/}
-                        {/*        states.map((s, i) => {*/}
-                        {/*            return <MenuItem key={"state_" + i.toString()} value={s}>*/}
-                        {/*                {s}*/}
-                        {/*            </MenuItem>*/}
-                        {/*        })*/}
-                        {/*    }*/}
-                        {/*</Select>*/}
-                    </Grid>
+                <Grid container direction={"column"} gap={2} alignItems={"center"}>
                     <Grid>
                         <Select value={state} onChange={onChange_state} sx={{width: 250}}>
                             <MenuItem value={"default"}>
@@ -251,6 +241,16 @@ f        <Box sx={{display: 'flex'}}>
                                 }
                             </Select>
                         </Grid>
+
+                    </Grid>
+                    <Grid>
+                        <DateSetter date={startDate} setDate={setStartDate} label={"Start Date"}/>
+                    </Grid>
+                    <Grid>
+                        <DateSetter date={endDate} setDate={setEndDate} label={"End Date"}/>
+                    </Grid>
+                    <Grid>
+                        <Button variant={"contained"}>Search!</Button>
                     </Grid>
                 </Grid>
             </Main>

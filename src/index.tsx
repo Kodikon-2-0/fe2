@@ -13,6 +13,8 @@ import {green} from "@mui/material/colors";
 import OrderBook from "./Pages/OrderBook";
 import AddResource from "./Pages/AddResource";
 import LenderDashboard from "./Pages/LenderDashboard";
+import {LocalizationProvider} from "@mui/x-date-pickers";
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 
 export const BASE_PATH = "http://192.168.209.190:8000"
 export let api = new DefaultApi(new Configuration({basePath: BASE_PATH}))
@@ -26,30 +28,30 @@ const theme = createTheme({
 
 const Root = () => {
     return <React.StrictMode>
-        {/*<Provider store={store}>*/}
-        {/*        <ThemeProvider theme={}>*/}
-        <ThemeProvider theme={theme}>
-            <BrowserRouter>
-                <Routes>
-                    <Route path={"/"} element={<Login/>}/>
-                    <Route path={"/signup"} element={<SignUp/>}/>
-                    <Route path={"/dashboard"} element={<Dashboard/>}/>
-                    <Route path={"/dashboard/lender"} element={<LenderDashboard/>}/>
-                    <Route path={"CustomerDashboard"} element={<MultipleSelectChip/>}/>
-                    <Route path={"/dashboard/OrderBook"} element={<OrderBook/>}/>
-                    <Route path={"/dashboard/AddResource"} element={<AddResource/>}/>
-                </Routes>
-            </BrowserRouter>
-        </ThemeProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+
+            {/*<Provider store={store}>*/}
+            {/*        <ThemeProvider theme={}>*/}
+            <ThemeProvider theme={theme}>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path={"/"} element={<Login/>}/>
+                        <Route path={"/signup"} element={<SignUp/>}/>
+                        <Route path={"/dashboard"} element={<Dashboard/>}/>
+                        <Route path={"/dashboard/lender"} element={<LenderDashboard/>}/>
+                        <Route path={"CustomerDashboard"} element={<MultipleSelectChip/>}/>
+                        <Route path={"/dashboard/OrderBook"} element={<OrderBook/>}/>
+                        <Route path={"/dashboard/AddResource"} element={<AddResource/>}/>
+                    </Routes>
+                </BrowserRouter>
+            </ThemeProvider>
+        </LocalizationProvider>
         {/*</ThemeProvider>*/}
     </React.StrictMode>
 }
 
-const root = ReactDOM.createRoot(
-    document.getElementById('root') as HTMLElement);
-root.render(
-    <Root/>
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+root.render(<Root/>);
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

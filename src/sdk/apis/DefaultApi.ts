@@ -16,6 +16,7 @@
 import * as runtime from '../runtime';
 import type {
   CreateAccountDetails,
+  CreateAccountResult,
   CreateResourceResult,
   HTTPValidationError,
   Info,
@@ -31,6 +32,8 @@ import type {
 import {
     CreateAccountDetailsFromJSON,
     CreateAccountDetailsToJSON,
+    CreateAccountResultFromJSON,
+    CreateAccountResultToJSON,
     CreateResourceResultFromJSON,
     CreateResourceResultToJSON,
     HTTPValidationErrorFromJSON,
@@ -116,7 +119,7 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Create Account
      */
-    async createAccountCreateAccountPostRaw(requestParameters: CreateAccountCreateAccountPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<LoginReturn>> {
+    async createAccountCreateAccountPostRaw(requestParameters: CreateAccountCreateAccountPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateAccountResult>> {
         if (requestParameters.createAccountDetails === null || requestParameters.createAccountDetails === undefined) {
             throw new runtime.RequiredError('createAccountDetails','Required parameter requestParameters.createAccountDetails was null or undefined when calling createAccountCreateAccountPost.');
         }
@@ -135,13 +138,13 @@ export class DefaultApi extends runtime.BaseAPI {
             body: CreateAccountDetailsToJSON(requestParameters.createAccountDetails),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => LoginReturnFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateAccountResultFromJSON(jsonValue));
     }
 
     /**
      * Create Account
      */
-    async createAccountCreateAccountPost(requestParameters: CreateAccountCreateAccountPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<LoginReturn> {
+    async createAccountCreateAccountPost(requestParameters: CreateAccountCreateAccountPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateAccountResult> {
         const response = await this.createAccountCreateAccountPostRaw(requestParameters, initOverrides);
         return await response.value();
     }

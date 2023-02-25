@@ -168,7 +168,6 @@ export default function Dashboard() {
                     edge="start"
                     sx={{mr: 2, ...(open && {display: 'none'})}}
                 >
-                    <Grid container direction={"row"} gap={2} padding={1} alignItems={"center"}>
                         <MenuIcon/>
                     </IconButton>
                     {/*<Typography variant="h6" noWrap component="div">*/}
@@ -282,6 +281,5 @@ export default function Dashboard() {
                 </Grid>
             </Main>
     </Box>
-
-    </>
+        </>
 }

@@ -67,6 +67,12 @@ export interface OrderInfo {
      * @memberof OrderInfo
      */
     orderStatus: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof OrderInfo
+     */
+    resourceGroup: number;
 }
 
 /**
@@ -82,6 +88,7 @@ export function instanceOfOrderInfo(value: object): boolean {
     isInstance = isInstance && "endTime" in value;
     isInstance = isInstance && "quantity" in value;
     isInstance = isInstance && "orderStatus" in value;
+    isInstance = isInstance && "resourceGroup" in value;
 
     return isInstance;
 }
@@ -104,6 +111,7 @@ export function OrderInfoFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'endTime': (new Date(json['end_time'])),
         'quantity': json['quantity'],
         'orderStatus': json['order_status'],
+        'resourceGroup': json['resource_group'],
     };
 }
 
@@ -124,6 +132,7 @@ export function OrderInfoToJSON(value?: OrderInfo | null): any {
         'end_time': (value.endTime.toISOString()),
         'quantity': value.quantity,
         'order_status': value.orderStatus,
+        'resource_group': value.resourceGroup,
     };
 }
 

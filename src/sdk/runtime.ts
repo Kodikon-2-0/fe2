@@ -93,7 +93,7 @@ export class BaseAPI {
 
     private middleware: Middleware[];
 
-    constructor(public configuration = DefaultConfig) {
+    constructor(protected configuration = DefaultConfig) {
         this.middleware = configuration.middleware;
     }
 

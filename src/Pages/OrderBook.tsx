@@ -18,6 +18,7 @@ const format_date = (date: Date) => {
 export default function OrderBook() {
     const [orders, setOrders] = useState<OrderInfo[]>([])
     const [resources, setResources] = useState<ResourceGroupInfo[]>([])
+    const [reload, setReload] = useState(false)
     useEffect(() => {
         api.getOrdersOrdersGet({}).then(r => {
             setOrders(r.orders)
@@ -25,14 +26,17 @@ export default function OrderBook() {
         api.getResourceGroupsDataResourceGroupsGet().then(r => {
             setResources(r.resourceGroups)
         })
-    }, [])
+    }, [reload])
 
     const doCancel = (oderId: number) => {
       api.updateOrderOrderOrderIdPatch({orderId: oderId, orderAcceptInfo: {newStatus: -1}})
+        setReload((s) => !s)
     }
 
     const doAccept = (oderId: number) => {
         api.updateOrderOrderOrderIdPatch({orderId: oderId, orderAcceptInfo: {newStatus: 2}})
+        setReload((s) => !s)
+
     }
 
     return <Grid container p={4}>

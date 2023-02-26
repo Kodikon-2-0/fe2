@@ -273,7 +273,7 @@ export default function Dashboard() {
                     </Grid>
                 </Grid>
                 <Grid container>
-                    <SearchResults details={details}/>
+                    <SearchResults details={details} search_from={startDate as Date} search_to={endDate as Date}/>
                 </Grid>
             </Main>
         </Box>

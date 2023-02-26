@@ -19,8 +19,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import LogoRect from "../components/logoRect";
-import {ResourceGroupInfo, SearchDetails} from "../sdk";
+import {ResourceGroupInfo, SearchDetails, SearchResultsInfo} from "../sdk";
 import DateSetter from "../components/DateSetter";
+import SearchResults from "../components/SearchResults";
 
 const drawerWidth = 240;
 
@@ -74,6 +75,7 @@ const DrawerHeader = styled('div')(({theme}) => ({
 }));
 
 export default function Dashboard() {
+    const [details, setDetails] = useState<Array<SearchResultsInfo>>([])
     const [data, setData] = useState<SearchDetails>({resourceType: 0, startTime: new Date, endTime: new Date})
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -147,8 +149,8 @@ export default function Dashboard() {
             mandal: mandal,
             searchDetails: {startTime: startDate as Date, endTime: endDate as Date, resourceType: resource_type.id}
         }).then(r => {
-            JSON.stringify(r)
-            console.log(r.results)
+            // setDetails(r)
+            setDetails(r.results);
         })
     }
 
@@ -166,8 +168,6 @@ export default function Dashboard() {
                     >
                         <MenuIcon/>
                     </IconButton>
-                    {/*<Typography variant="h6" noWrap component="div">*/}
-                    {/*    Krishi Genie </Typography>*/}
                     <LogoRect/>
                 </Toolbar>
             </AppBar>
@@ -273,7 +273,7 @@ export default function Dashboard() {
                     </Grid>
                 </Grid>
                 <Grid container>
-
+                    <SearchResults details={details}/>
                 </Grid>
             </Main>
         </Box>

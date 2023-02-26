@@ -39,7 +39,7 @@ const Root = () => {
                         <Route path={"/signup"} element={<SignUp/>}/>
                         <Route path={"/dashboard"} element={<Dashboard/>}/>
                         <Route path={"/dashboard/lender"} element={<LenderDashboard/>}/>
-                        <Route path={"CustomerDashboard"} element={<MultipleSelectChip/>}/>
+                        <Route path={"/CustomerDashboard"} element={<MultipleSelectChip/>}/>
                         <Route path={"/dashboard/OrderBook"} element={<OrderBook/>}/>
                         <Route path={"/dashboard/AddResource"} element={<AddResource/>}/>
                     </Routes>

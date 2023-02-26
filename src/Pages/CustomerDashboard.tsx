@@ -88,7 +88,6 @@ export default function MultipleSelectChip() {
                     ))}
                 </Select>
             </FormControl>
-            <ResourceCard/>
         </Grid>
     );
 }

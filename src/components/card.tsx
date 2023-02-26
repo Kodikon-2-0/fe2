@@ -2,8 +2,11 @@ import {Card, CardMedia, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import img from "./images/img1.jpg"
 import {InfoRounded} from "@mui/icons-material";
-export default function ResourceCard() {
-  return  <Card
+export default function ResourceCard({name, available_from, available_to}: {name: string, available_from: Date, available_to: Date}) {
+    const format_date = (date: Date) => {
+        return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
+    }
+    return  <Card
         variant="outlined"
         sx={{
             display: 'flex',
@@ -29,14 +32,14 @@ export default function ResourceCard() {
         />
         <Box sx={{alignSelf: 'center', ml: 2}}>
             <Typography variant="body2" color="text.secondary">
-                Mahindra YUVO Tech+ 45Di
+                {name}
             </Typography>
-            <Typography component="div" fontWeight="bold">
-                ₹5000
-            </Typography>
-            <Typography variant={"body1"}>
-            Qty:3
-            </Typography>
+            {/*<Typography component="div" fontWeight="bold">*/}
+            {/*    ₹5000*/}
+            {/*</Typography>*/}
+            {/*<Typography variant={"body1"}>*/}
+            {/*Qty:3*/}
+            {/*</Typography>*/}
             <Box
                 sx={{
                     ml: -1,
@@ -53,7 +56,7 @@ export default function ResourceCard() {
                 }}
             >
                 <InfoRounded sx={{fontSize: 16, mr: 0.5, mt: '1px'}}/>
-                Available from: 28 Feb-5 Mar
+                <Typography>from <b>{format_date(available_from)}</b> to <b>{format_date(available_to)}</b></Typography>
             </Box>
         </Box>
     </Card>

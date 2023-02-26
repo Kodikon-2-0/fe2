@@ -2,6 +2,7 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {AppBar, Button, Grid, Select, Typography} from "@mui/material";
+import {TextField} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import {SelectChangeEvent} from "@mui/material/Select";
 import DateSetter from "../components/DateSetter";
@@ -24,6 +25,7 @@ type resource = {
 const api = new DefaultApi(new Configuration({basePath: BASE_PATH,accessToken: "Bearer " + (new Cookies()).get("token")}))
 
 export default function AddResource() {
+    const [named, setNamed] = useState<resource>({nam: "", regno: ""})
     const [startDate, setStartDate] = useState<Date | null>(null)
     const [endDate, setEndDate] = useState<Date | null>(null)
     const navigate = useNavigate()
@@ -51,6 +53,9 @@ export default function AddResource() {
         }).then(result => setMandals(result.names))
     }, [state, district])
     const [mandal, setMandal] = useState("default")
+    const onChange_name = (e: React.ChangeEvent<HTMLInputElement>) => {
+            setNamed({...named, [e.target.name]: e.target.value})
+        }
     const onChange_state = (e: SelectChangeEvent<string>) => {
         setState(e.target.value)
     }
@@ -68,21 +73,24 @@ export default function AddResource() {
     }
 
     const addResource = () => {
-        const resource_type = resources.find(s => s.name == resource)
+        const resource_type = resources.find(s => s.name === resource)
         if (!resource_type) {
             return
         }
 
         api.createResourceDataStateDistrictMandalResourcesPost({
             state: state, district:district, mandal: mandal, resourceCreateDetails: {
-                data: JSON.stringify({price: 5000, registration: "KA 51 FA 1024"}), resourceGroupId: resource_type.id
+                data: JSON.stringify({price: 5000, registration: named.regno, description: named.nam}), resourceGroupId: resource_type.id
             }
         }).then(r => {
             api.setResourceRangeResourcesResourceIdSetAvailableRangePost({
                 resourceId: r.id,
                 resourceAvailabilityDetails: {start: startDate as Date, end: endDate as Date}
-            }).then(_ => {
-                navigate("/LenderDashboard")
+            }).then(d => {
+                if(d) {
+                    alert("Resource successfully listed!")
+                }
+                navigate("/dashboard/lender")
             })
         }).catch(e => {
             alert(e)
@@ -151,6 +159,12 @@ export default function AddResource() {
                     })
                 }
             </Select>
+        </Grid>
+        <Grid>
+            <TextField label={"Desciption"} onChange={onChange_name} value={named.nam} name={"nam"}/>
+        </Grid>
+        <Grid>
+            <TextField label={"Registration Number"} onChange={onChange_name} value={named.regno} name={"regno"}/>
         </Grid>
         <Grid>
             <DateSetter date={startDate} setDate={setStartDate} label={"Start Date"}/>

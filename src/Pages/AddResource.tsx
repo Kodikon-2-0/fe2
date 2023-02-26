@@ -1,8 +1,7 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {AppBar, Button, Grid, Select, Typography} from "@mui/material";
-import {TextField} from "@mui/material";
+import {AppBar, Button, Grid, Select, TextField, Typography} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import {SelectChangeEvent} from "@mui/material/Select";
 import DateSetter from "../components/DateSetter";
@@ -22,10 +21,13 @@ type resource = {
 
 }
 
-const api = new DefaultApi(new Configuration({basePath: BASE_PATH,accessToken: "Bearer " + (new Cookies()).get("token")}))
+const api = new DefaultApi(new Configuration({
+    basePath: BASE_PATH,
+    accessToken: "Bearer " + (new Cookies()).get("token")
+}))
 
 export default function AddResource() {
-    const [named, setNamed] = useState({nam: "", regno: ""})
+    const [named, setNamed] = useState({nam: "", regno: "", price: 0})
     const [startDate, setStartDate] = useState<Date | null>(null)
     const [endDate, setEndDate] = useState<Date | null>(null)
     const navigate = useNavigate()
@@ -54,8 +56,8 @@ export default function AddResource() {
     }, [state, district])
     const [mandal, setMandal] = useState("default")
     const onChange_name = (e: React.ChangeEvent<HTMLInputElement>) => {
-            setNamed({...named, [e.target.name]: e.target.value})
-        }
+        setNamed({...named, [e.target.name]: e.target.value})
+    }
     const onChange_state = (e: SelectChangeEvent<string>) => {
         setState(e.target.value)
     }
@@ -79,15 +81,16 @@ export default function AddResource() {
         }
 
         api.createResourceDataStateDistrictMandalResourcesPost({
-            state: state, district:district, mandal: mandal, resourceCreateDetails: {
-                data: JSON.stringify({price: 5000, registration: named.regno, description: named.nam}), resourceGroupId: resource_type.id
+            state: state, district: district, mandal: mandal, resourceCreateDetails: {
+                data: JSON.stringify({price: named.price, registration: named.regno, description: named.nam}),
+                resourceGroupId: resource_type.id
             }
         }).then(r => {
             api.setResourceRangeResourcesResourceIdSetAvailableRangePost({
                 resourceId: r.id,
                 resourceAvailabilityDetails: {start: startDate as Date, end: endDate as Date}
             }).then(d => {
-                if(d) {
+                if (d) {
                     alert("Resource successfully listed!")
                 }
                 navigate("/dashboard/lender")
@@ -103,78 +106,82 @@ export default function AddResource() {
     }
 
     return <>
-        <AppBar position="fixed" sx={{color: "ffffff", p:1}}>
+        <AppBar position="fixed" sx={{color: "ffffff", p: 1}}>
             <Toolbar>
                 <LogoRect/>
             </Toolbar>
         </AppBar>
         <Grid mt={"15vh"} container direction={"column"} gap={2} alignItems={"center"}>
             <Typography variant={"h5"}>Add a resource</Typography>
-        <Grid>
-            <Select value={state} onChange={onChange_state} sx={{width: 250}}>
-                <MenuItem value={"default"}>
-                    Select State
-                </MenuItem>
-                {states.map((s, i) => {
-                    return <MenuItem key={"state_" + i.toString()} value={s}>
-                        {s}
+            <Grid>
+                <Select value={state} onChange={onChange_state} sx={{width: 250}}>
+                    <MenuItem value={"default"}>
+                        Select State
                     </MenuItem>
-                })}
-            </Select>
-        </Grid>
-        <Grid>
-            <Select value={district} onChange={onChange_districts} sx={{width: 250}}>
-                <MenuItem value={"default"} disabled={true}>
-                    Select District
-                </MenuItem>
-                {districts.map((s, i) => {
-                    return <MenuItem key={"districts_" + i.toString()} value={s}>
-                        {s}
-                    </MenuItem>
-                })}
-            </Select>
-        </Grid>
-        <Grid>
-            <Select value={mandal} onChange={onChange_mandals} sx={{width: 250}}>
-                <MenuItem value={"default"} disabled={true}>
-                    Select Mandal
-                </MenuItem>
-                {mandals.map((s, i) => {
-                    return <MenuItem key={"mandals_" + i.toString()} value={s}>
-                        {s}
-                    </MenuItem>
-                })}
-            </Select>
-        </Grid>
-        <Grid>
-            <Select value={resource} onChange={onChange_resource} sx={{width: 250}}>
-                <MenuItem value={"default"} disabled={true}>
-                    Select Resource
-                </MenuItem>
-                {
-                    resources.map((s, i) => {
-                        return <MenuItem key={"resources_" + i.toString()} value={s.name}>
-                            {s.name}
+                    {states.map((s, i) => {
+                        return <MenuItem key={"state_" + i.toString()} value={s}>
+                            {s}
                         </MenuItem>
-                    })
-                }
-            </Select>
+                    })}
+                </Select>
+            </Grid>
+            <Grid>
+                <Select value={district} onChange={onChange_districts} sx={{width: 250}}>
+                    <MenuItem value={"default"} disabled={true}>
+                        Select District
+                    </MenuItem>
+                    {districts.map((s, i) => {
+                        return <MenuItem key={"districts_" + i.toString()} value={s}>
+                            {s}
+                        </MenuItem>
+                    })}
+                </Select>
+            </Grid>
+            <Grid>
+                <Select value={mandal} onChange={onChange_mandals} sx={{width: 250}}>
+                    <MenuItem value={"default"} disabled={true}>
+                        Select Mandal
+                    </MenuItem>
+                    {mandals.map((s, i) => {
+                        return <MenuItem key={"mandals_" + i.toString()} value={s}>
+                            {s}
+                        </MenuItem>
+                    })}
+                </Select>
+            </Grid>
+            <Grid>
+                <Select value={resource} onChange={onChange_resource} sx={{width: 250}}>
+                    <MenuItem value={"default"} disabled={true}>
+                        Select Resource
+                    </MenuItem>
+                    {
+                        resources.map((s, i) => {
+                            return <MenuItem key={"resources_" + i.toString()} value={s.name}>
+                                {s.name}
+                            </MenuItem>
+                        })
+                    }
+                </Select>
+            </Grid>
+            <Grid>
+                <TextField label={"Desciption"} onChange={onChange_name} value={named.nam} name={"nam"}/>
+            </Grid>
+            <Grid>
+                <TextField label={"Registration Number"} onChange={onChange_name} value={named.regno} name={"regno"}/>
+            </Grid>
+            <Grid>
+                <TextField label={"Price (in Indian Rupees)"} sx={{minWidth: 250}} onChange={onChange_name}
+                           value={named.price} name={"price"} type={"number"}/>
+            </Grid>
+            <Grid>
+                <DateSetter date={startDate} setDate={setStartDate} label={"Start Date"}/>
+            </Grid>
+            <Grid>
+                <DateSetter date={endDate} setDate={setEndDate} label={"End Date"}/>
+            </Grid>
+            <Grid>
+                <Button variant={"contained"} onClick={addResource}>List Resource</Button>
+            </Grid>
         </Grid>
-        <Grid>
-            <TextField label={"Desciption"} onChange={onChange_name} value={named.nam} name={"nam"}/>
-        </Grid>
-        <Grid>
-            <TextField label={"Registration Number"} onChange={onChange_name} value={named.regno} name={"regno"}/>
-        </Grid>
-        <Grid>
-            <DateSetter date={startDate} setDate={setStartDate} label={"Start Date"}/>
-        </Grid>
-        <Grid>
-            <DateSetter date={endDate} setDate={setEndDate} label={"End Date"}/>
-        </Grid>
-        <Grid>
-            <Button variant={"contained"} onClick={addResource}>List Resource</Button>
-        </Grid>
-    </Grid>
     </>
 }

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {api} from "../index";
-import {Button, FormControlLabel, Grid, Select, Stack, Switch} from "@mui/material";
+import {Button, Grid, Select, Stack} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import {SelectChangeEvent} from "@mui/material/Select";
 import {styled, useTheme} from '@mui/material/styles';
@@ -22,7 +22,6 @@ import LogoRect from "../components/logoRect";
 import {ResourceGroupInfo, SearchDetails, SearchResultsInfo} from "../sdk";
 import DateSetter from "../components/DateSetter";
 import SearchResults from "../components/SearchResults";
-import {Link} from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -134,11 +133,15 @@ export default function Dashboard() {
     }
     const onChange_resource = (g: SelectChangeEvent<string>) => {
         setResource(g.target.value)
+        setDetails([])
     }
 
     const [startDate, setStartDate] = useState<Date | null>(null)
     const [endDate, setEndDate] = useState<Date | null>(null)
-
+    // const resource_type = resources.find(s => s.name == resource)
+    // if (!resource_type) {
+    //     return null
+    // }
     const onSearch = () => {
         const resource_type = resources.find(s => s.name == resource)
         if (!resource_type) {
@@ -273,7 +276,8 @@ export default function Dashboard() {
                     </Grid>
                 </Grid>
                 <Grid container>
-                    <SearchResults details={details} search_from={startDate as Date} search_to={endDate as Date}/>
+                    <SearchResults details={details} search_from={startDate as Date} search_to={endDate as Date}
+                                   group_id={resource}/>
                 </Grid>
             </Main>
         </Box>

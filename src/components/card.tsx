@@ -1,23 +1,47 @@
-import {Button, Card, CardMedia, Dialog, Grid, Typography} from "@mui/material";
+import {Button, Card, CardMedia, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
-import img from "./images/img1.jpg"
+import img1 from "./images/img1.jpg"
+import img2 from "./images/cold-storage-1.jpg"
 import {InfoRounded} from "@mui/icons-material";
 import {Configuration, DefaultApi} from "../sdk";
 import {BASE_PATH} from "../path";
 import Cookies from "universal-cookie";
+
 const api = new DefaultApi(new Configuration({
     basePath: BASE_PATH, accessToken: "Bearer " + (new Cookies()).get("token")
 }))
-export default function ResourceCard({name, available_from, available_to, resource_id, search_from, search_to}: {search_from: Date, search_to: Date,resource_id: number, name: string, available_from: Date, available_to: Date}) {
+export default function ResourceCard({
+                                         name,
+                                         available_from,
+                                         available_to,
+                                         resource_id,
+                                         search_from,
+                                         search_to,
+                                         group_id
+                                     }: { search_from: Date, search_to: Date, resource_id: number, name: string, available_from: Date, available_to: Date, group_id: string }) {
     const format_date = (date: Date) => {
         return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
     }
 
     const doBook = () => {
-        api.createOrderOrderPost({orderCreateDetails: {resourceId: resource_id, fromTime: search_from, toTime: search_to, quantity: 1}})
+        api.createOrderOrderPost({
+            orderCreateDetails: {
+                resourceId: resource_id,
+                fromTime: search_from,
+                toTime: search_to,
+                quantity: 1
+            }
+        })
+    }
+    let pic;
+    console.log(resource_id)
+    if (group_id === "Cold Storage") {
+        pic = img2
+    } else {
+        pic = img1
     }
 
-    return  <>
+    return <>
         <Card
             variant="outlined"
             sx={{
@@ -31,10 +55,10 @@ export default function ResourceCard({name, available_from, available_to, resour
         >
             <CardMedia
                 component="img"
-                width="120"
-                height="120"
-                alt="Mahindra YUVO Tech+ 45Di"
-                src={img}
+                width="100"
+                height="100"
+                alt="DescPic"
+                src={pic}
                 sx={{
                     borderRadius: 1.0,
                     width: {xs: '100%', sm: 100},

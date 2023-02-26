@@ -146,7 +146,7 @@ export default function AddResource() {
             </Select>
         </Grid>
         <Grid>
-            <TextField label={"Desciption"} onChange={onChange_name} value={named.nam} name={"name"}/>
+            <TextField label={"Desciption"} onChange={onChange_name} value={named.nam} name={"nam"}/>
         </Grid>
         <Grid>
             <TextField label={"Registration Number"} onChange={onChange_name} value={named.regno} name={"regno"}/>

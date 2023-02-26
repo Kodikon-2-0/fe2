@@ -10,13 +10,16 @@ export default function LenderDashboard() {
         navigate("/dashboard/AddResource")
     }
 
+    const onClick_OrderBook= () => {
+        navigate("/dashboard/OrderBook")
+    }
     return <Paper>
-        {/*<Grid container direction={"column"}>*/}
-        {/*    <Grid>*/}
-        {/*        <Button onClick={onClick_OrderBook}>Order Book</Button>*/}
-        {/*    </Grid>*/}
-            <Grid>
-                <Button onClick={onClick_AddResource}>Add Resource</Button>
+            <Grid container>
+                <Grid>
+                    <Button onClick={onClick_AddResource}>Add Resource</Button>
+                </Grid>
+                <Grid>
+                    <Button onClick={onClick_OrderBook}>View Order Book</Button>
+                </Grid>
             </Grid>
-        {/*</Grid>*/}
     </Paper>}

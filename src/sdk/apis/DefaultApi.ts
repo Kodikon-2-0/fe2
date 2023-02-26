@@ -23,7 +23,6 @@ import type {
   LoginDetails,
   LoginReturn,
   OrderAcceptInfo,
-  OrderBookResults,
   OrderCreateDetails,
   ResourceAvailabilityDetails,
   ResourceCreateDetails,
@@ -66,6 +65,7 @@ import {
     UserSetTypeFromJSON,
     UserSetTypeToJSON,
 } from '../models';
+import {OrderBookResults} from "../models/OrderBookResults";
 
 export interface CreateAccountCreateAccountPostRequest {
     createAccountDetails: CreateAccountDetails;

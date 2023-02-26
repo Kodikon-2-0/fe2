@@ -20,7 +20,7 @@ export default function Login() {
     }
     const login = () => {
         api.loginLoginPost({loginDetails: {username: state.username, password: state.password}}).then(r => {
-            api.configuration.config = new Configuration({accessToken: r.token, basePath: BASE_PATH})
+            api.configuration.config = new Configuration({accessToken: "Bearer " + r.token, basePath: BASE_PATH})
             const cookies = new Cookies()
             cookies.set("token", r.token)
             const permissions = r.usertype

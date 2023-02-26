@@ -1,6 +1,9 @@
 import {useNavigate} from "react-router-dom";
 import {Button, Paper} from "@mui/material";
-import {api} from "../index";
+import {Configuration, DefaultApi} from "../sdk";
+import {BASE_PATH} from "../path";
+import Cookies from "universal-cookie";
+const api = new DefaultApi(new Configuration({basePath: BASE_PATH,accessToken: "Bearer " + (new Cookies()).get("token")}))
 
 export default function OrderBook() {
     const getOrder = () => {

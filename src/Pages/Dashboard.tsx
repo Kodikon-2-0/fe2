@@ -21,7 +21,6 @@ import ListItem from '@mui/material/ListItem';
 import LogoRect from "../components/logoRect";
 import {ResourceGroupInfo, SearchDetails} from "../sdk";
 import DateSetter from "../components/DateSetter";
-import dayjs from "dayjs";
 
 const drawerWidth = 240;
 
@@ -113,14 +112,10 @@ export default function Dashboard() {
         })
     }, [])
 
-    const search = () => {
-        api.searchDataStateDistrictMandalSearchPost({
-            district: district, state: state, mandal: mandal, searchDetails: data
-        })
-    }
-
-    // const onChange_resource = (e: SelectChangeEvent) => {
-    //     setResource({resourceGroups: e.target.value})
+    // const search = () => {
+    //     api.searchDataStateDistrictMandalSearchPost({
+    //         district: district, state: state, mandal: mandal, searchDetails: data
+    //     })
     // }
 
     const onChange_state = (e: SelectChangeEvent<string>) => {
@@ -152,22 +147,23 @@ export default function Dashboard() {
             mandal: mandal,
             searchDetails: {startTime: startDate as Date, endTime: endDate as Date, resourceType: resource_type.id}
         }).then(r => {
-
+            JSON.stringify(r)
+            console.log(r.results)
         })
     }
 
     return <>
         <Box sx={{display: 'flex'}}>
-        <CssBaseline/>
-        <AppBar position="fixed" sx={{color: "ffffff"}} open={open}>
-            <Toolbar>
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={handleDrawerOpen}
-                    edge="start"
-                    sx={{mr: 2, ...(open && {display: 'none'})}}
-                >
+            <CssBaseline/>
+            <AppBar position="fixed" sx={{color: "ffffff"}} open={open}>
+                <Toolbar>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={handleDrawerOpen}
+                        edge="start"
+                        sx={{mr: 2, ...(open && {display: 'none'})}}
+                    >
                         <MenuIcon/>
                     </IconButton>
                     {/*<Typography variant="h6" noWrap component="div">*/}
@@ -273,13 +269,13 @@ export default function Dashboard() {
                         <DateSetter date={endDate} setDate={setEndDate} label={"End Date"}/>
                     </Grid>
                     <Grid>
-                        <Button variant={"contained"}>Search!</Button>
+                        <Button onClick={onSearch} variant={"contained"}>Search!</Button>
                     </Grid>
                 </Grid>
                 <Grid container>
 
                 </Grid>
             </Main>
-    </Box>
-        </>
+        </Box>
+    </>
 }

@@ -1,6 +1,7 @@
 import {Card, CardMedia, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import img from "./images/img1.jpg"
+import {InfoRounded} from "@mui/icons-material";
 export default function ResourceCard() {
   return  <Card
         variant="outlined"
@@ -15,8 +16,8 @@ export default function ResourceCard() {
     >
         <CardMedia
             component="img"
-            width="100"
-            height="100"
+            width="120"
+            height="120"
             alt="Mahindra YUVO Tech+ 45Di"
             src={img}
             sx={{
@@ -33,6 +34,9 @@ export default function ResourceCard() {
             <Typography component="div" fontWeight="bold">
                 ₹5000
             </Typography>
+            <Typography variant={"body1"}>
+            Qty:3
+            </Typography>
             <Box
                 sx={{
                     ml: -1,
@@ -48,8 +52,8 @@ export default function ResourceCard() {
                         theme.palette.mode === 'dark' ? '#fff' : 'primary.700',
                 }}
             >
-                {/*<InfoRounded sx={{fontSize: 16, mr: 0.5, mt: '1px'}}/>*/}
-                {/*Confidence score of 85%*/}
+                <InfoRounded sx={{fontSize: 16, mr: 0.5, mt: '1px'}}/>
+                Available from: 28 Feb-5 Mar
             </Box>
         </Box>
     </Card>

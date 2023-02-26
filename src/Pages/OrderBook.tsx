@@ -1,4 +1,4 @@
-import {Card, Grid, Typography} from "@mui/material";
+import {AppBar, Card, Grid, Typography} from "@mui/material";
 import {Configuration, DefaultApi, ResourceGroupInfo} from "../sdk";
 import {BASE_PATH} from "../path";
 import Cookies from "universal-cookie";
@@ -6,6 +6,9 @@ import {useEffect, useState} from "react";
 import {OrderInfo} from "../sdk/models/OrderInfo";
 import IconButton from "@mui/material/IconButton";
 import {Check, Close} from "@mui/icons-material";
+import Toolbar from "@mui/material/Toolbar";
+import LogoRect from "../components/logoRect";
+import * as React from "react";
 
 const api = new DefaultApi(new Configuration({
     basePath: BASE_PATH, accessToken: "Bearer " + (new Cookies()).get("token")
@@ -39,26 +42,35 @@ export default function OrderBook() {
 
     }
 
-    return <Grid container p={4}>
-        {orders.map((o, k) => {
-            return <Card key={"orders_" + k} sx={{width: "15em"}}>
-                <Grid container direction={"column"} p={2}>
-                    <Grid>
-                        <Typography>Loan {resources[o.resourceGroup].name} to {o.lessee}</Typography>
+    return <>
+        <AppBar position="fixed" sx={{color: "ffffff", p:1}}>
+            <Toolbar>
+                <LogoRect/>
+            </Toolbar>
+        </AppBar>
+        <Typography variant={"h5"} mt={"15vh"} textAlign={"center"}>Manage Orders</Typography>
+
+        <Grid container p={4}  gap={2}>
+            {orders.map((o, k) => {
+                return <Card key={"orders_" + k} sx={{width: "15em"}}>
+                    <Grid container direction={"column"} p={2}>
+                        <Grid>
+                            <Typography>Loan {resources[o.resourceGroup].name} to {o.lessee}</Typography>
+                        </Grid>
+                        <Grid>
+                            <Typography>from <b>{format_date(o.startTime)}</b> to <b>{format_date(o.endTime)}</b></Typography>
+                        </Grid>
+                        {
+                            o.orderStatus === 1 ? <Grid>
+                                <Grid container justifyContent={"space-between"}>
+                                    <IconButton onClick={() => doAccept(o.orderid)}><Check/></IconButton>
+                                    <IconButton onClick={() => doCancel(o.orderid)}><Close/></IconButton>
+                                </Grid>
+                            </Grid> : o.orderStatus > 1 ? <Grid>Confirmed</Grid> : <Grid> Cancelled</Grid>
+                        }
                     </Grid>
-                    <Grid>
-                        <Typography>from <b>{format_date(o.startTime)}</b> to <b>{format_date(o.endTime)}</b></Typography>
-                    </Grid>
-                    {
-                        o.orderStatus === 1 ? <Grid>
-                            <Grid container justifyContent={"space-between"}>
-                                <IconButton onClick={() => doAccept(o.orderid)}><Check/></IconButton>
-                                <IconButton onClick={() => doCancel(o.orderid)}><Close/></IconButton>
-                            </Grid>
-                        </Grid> : o.orderStatus > 1 ? <Grid>Confirmed</Grid> : <Grid> Cancelled</Grid>
-                    }
-                </Grid>
-            </Card>
-        })}
-    </Grid>
+                </Card>
+            })}
+        </Grid>
+    </>
 }

@@ -1,13 +1,15 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {Button, Grid, Select} from "@mui/material";
+import {AppBar, Button, Grid, Select, Typography} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import {SelectChangeEvent} from "@mui/material/Select";
 import DateSetter from "../components/DateSetter";
 import {Configuration, DefaultApi, ResourceGroupInfo} from "../sdk";
 import Cookies from "universal-cookie";
 import {BASE_PATH} from "../path";
+import Toolbar from "@mui/material/Toolbar";
+import LogoRect from "../components/logoRect";
 
 type resource = {
     state: string
@@ -92,7 +94,14 @@ export default function AddResource() {
         // })
     }
 
-    return <> <Grid container direction={"column"} gap={2} alignItems={"center"}>
+    return <>
+        <AppBar position="fixed" sx={{color: "ffffff", p:1}}>
+            <Toolbar>
+                <LogoRect/>
+            </Toolbar>
+        </AppBar>
+        <Grid mt={"15vh"} container direction={"column"} gap={2} alignItems={"center"}>
+            <Typography variant={"h5"}>Add a resource</Typography>
         <Grid>
             <Select value={state} onChange={onChange_state} sx={{width: 250}}>
                 <MenuItem value={"default"}>

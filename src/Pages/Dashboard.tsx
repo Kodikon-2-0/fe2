@@ -22,6 +22,7 @@ import LogoRect from "../components/logoRect";
 import {ResourceGroupInfo, SearchDetails, SearchResultsInfo} from "../sdk";
 import DateSetter from "../components/DateSetter";
 import SearchResults from "../components/SearchResults";
+import {Link} from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -193,9 +194,7 @@ export default function Dashboard() {
                 <List>
                     <ListItem>
                         <Stack direction="row" spacing={1} alignItems="center">
-                            <Typography>Lend</Typography>
-                            <FormControlLabel control={<Switch/>} label={""} labelPlacement={"top"}/>
-                            <Typography>Lease</Typography>
+                            <Button href={"/dashboard/lender"}>Go to Home</Button>
                         </Stack>
                     </ListItem>
                 </List>
@@ -203,6 +202,7 @@ export default function Dashboard() {
             <Main open={open}>
                 <DrawerHeader/>
                 <Grid container direction={"column"} gap={2} alignItems={"center"}>
+                    <Typography variant={"h5"}>Search for a resource</Typography>
                     <Grid>
                         <Select value={state} onChange={onChange_state} sx={{width: 250}}>
                             <MenuItem value={"default"}>

@@ -25,7 +25,7 @@ type resource = {
 const api = new DefaultApi(new Configuration({basePath: BASE_PATH,accessToken: "Bearer " + (new Cookies()).get("token")}))
 
 export default function AddResource() {
-    const [named, setNamed] = useState<resource>({nam: "", regno: ""})
+    const [named, setNamed] = useState({nam: "", regno: ""})
     const [startDate, setStartDate] = useState<Date | null>(null)
     const [endDate, setEndDate] = useState<Date | null>(null)
     const navigate = useNavigate()

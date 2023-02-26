@@ -22,11 +22,14 @@ import type {
   Info,
   LoginDetails,
   LoginReturn,
+  OrderAcceptInfo,
+  OrderBookResults,
   OrderCreateDetails,
   ResourceAvailabilityDetails,
   ResourceCreateDetails,
   ResourceGroupReturn,
   SearchDetails,
+  SearchResult,
   UserSetType,
 } from '../models';
 import {
@@ -44,6 +47,10 @@ import {
     LoginDetailsToJSON,
     LoginReturnFromJSON,
     LoginReturnToJSON,
+    OrderAcceptInfoFromJSON,
+    OrderAcceptInfoToJSON,
+    OrderBookResultsFromJSON,
+    OrderBookResultsToJSON,
     OrderCreateDetailsFromJSON,
     OrderCreateDetailsToJSON,
     ResourceAvailabilityDetailsFromJSON,
@@ -54,6 +61,8 @@ import {
     ResourceGroupReturnToJSON,
     SearchDetailsFromJSON,
     SearchDetailsToJSON,
+    SearchResultFromJSON,
+    SearchResultToJSON,
     UserSetTypeFromJSON,
     UserSetTypeToJSON,
 } from '../models';
@@ -109,6 +118,11 @@ export interface TokenTokenPostRequest {
     scope?: string;
     clientId?: string;
     clientSecret?: string;
+}
+
+export interface UpdateOrderOrderOrderIdPatchRequest {
+    orderId: number;
+    orderAcceptInfo: OrderAcceptInfo;
 }
 
 /**
@@ -214,7 +228,6 @@ export class DefaultApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.accessToken) {
-            console.log("Test")
             // oauth required
             headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2PasswordBearer", []);
         }
@@ -305,7 +318,7 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Get Orders
      */
-    async getOrdersOrdersGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async getOrdersOrdersGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrderBookResults>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -322,13 +335,13 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.TextApiResponse(response) as any;
+        return new runtime.JSONApiResponse(response, (jsonValue) => OrderBookResultsFromJSON(jsonValue));
     }
 
     /**
      * Get Orders
      */
-    async getOrdersOrdersGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+    async getOrdersOrdersGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrderBookResults> {
         const response = await this.getOrdersOrdersGetRaw(initOverrides);
         return await response.value();
     }
@@ -447,7 +460,7 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Search
      */
-    async searchDataStateDistrictMandalSearchPostRaw(requestParameters: SearchDataStateDistrictMandalSearchPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+    async searchDataStateDistrictMandalSearchPostRaw(requestParameters: SearchDataStateDistrictMandalSearchPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SearchResult>> {
         if (requestParameters.state === null || requestParameters.state === undefined) {
             throw new runtime.RequiredError('state','Required parameter requestParameters.state was null or undefined when calling searchDataStateDistrictMandalSearchPost.');
         }
@@ -478,13 +491,13 @@ export class DefaultApi extends runtime.BaseAPI {
             body: SearchDetailsToJSON(requestParameters.searchDetails),
         }, initOverrides);
 
-        return new runtime.TextApiResponse(response) as any;
+        return new runtime.JSONApiResponse(response, (jsonValue) => SearchResultFromJSON(jsonValue));
     }
 
     /**
      * Search
      */
-    async searchDataStateDistrictMandalSearchPost(requestParameters: SearchDataStateDistrictMandalSearchPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+    async searchDataStateDistrictMandalSearchPost(requestParameters: SearchDataStateDistrictMandalSearchPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SearchResult> {
         const response = await this.searchDataStateDistrictMandalSearchPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -639,6 +652,48 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async tokenTokenPost(requestParameters: TokenTokenPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
         const response = await this.tokenTokenPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Update Order
+     */
+    async updateOrderOrderOrderIdPatchRaw(requestParameters: UpdateOrderOrderOrderIdPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<any>> {
+        if (requestParameters.orderId === null || requestParameters.orderId === undefined) {
+            throw new runtime.RequiredError('orderId','Required parameter requestParameters.orderId was null or undefined when calling updateOrderOrderOrderIdPatch.');
+        }
+
+        if (requestParameters.orderAcceptInfo === null || requestParameters.orderAcceptInfo === undefined) {
+            throw new runtime.RequiredError('orderAcceptInfo','Required parameter requestParameters.orderAcceptInfo was null or undefined when calling updateOrderOrderOrderIdPatch.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2PasswordBearer", []);
+        }
+
+        const response = await this.request({
+            path: `/order/{order_id}`.replace(`{${"order_id"}}`, encodeURIComponent(String(requestParameters.orderId))),
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: OrderAcceptInfoToJSON(requestParameters.orderAcceptInfo),
+        }, initOverrides);
+
+        return new runtime.TextApiResponse(response) as any;
+    }
+
+    /**
+     * Update Order
+     */
+    async updateOrderOrderOrderIdPatch(requestParameters: UpdateOrderOrderOrderIdPatchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<any> {
+        const response = await this.updateOrderOrderOrderIdPatchRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

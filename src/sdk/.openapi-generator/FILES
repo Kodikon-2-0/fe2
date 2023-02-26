@@ -9,12 +9,17 @@ models/Info.ts
 models/LocationInner.ts
 models/LoginDetails.ts
 models/LoginReturn.ts
+models/OrderAcceptInfo.ts
+models/OrderBookResults.ts
 models/OrderCreateDetails.ts
+models/OrderInfo.ts
 models/ResourceAvailabilityDetails.ts
 models/ResourceCreateDetails.ts
 models/ResourceGroupInfo.ts
 models/ResourceGroupReturn.ts
 models/SearchDetails.ts
+models/SearchResult.ts
+models/SearchResultsInfo.ts
 models/UserSetType.ts
 models/ValidationError.ts
 models/index.ts

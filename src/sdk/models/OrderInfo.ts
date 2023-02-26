@@ -27,16 +27,16 @@ export interface OrderInfo {
     orderid: number;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof OrderInfo
      */
-    lessor: number;
+    lessor: string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof OrderInfo
      */
-    lessee: number;
+    lessee: string;
     /**
      * 
      * @type {number}
